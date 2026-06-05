@@ -11,6 +11,10 @@ on:
         description: Optional human-readable tag to publish in addition to sha-<commit>
         required: false
         default: ""
+      app_version:
+        description: Semver app version to bake into the image, for example v2.7.3. Keep this aligned with the deployed Twenty release line.
+        required: true
+        default: v2.7.3
 
 permissions:
   contents: read
@@ -54,6 +58,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            APP_VERSION=crow-${{ github.sha }}
+            APP_VERSION=${{ inputs.app_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
